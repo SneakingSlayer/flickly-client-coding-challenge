@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import MobileNav from './mobile-nav';
 import DesktopNav from './desktop-nav';
+import AppContainer from '../container';
 
 const Navbar = () => {
     const isDesktop = useMediaQuery('(min-width: 768px)');
@@ -49,10 +50,10 @@ const Navbar = () => {
                     : 'bg-background/40 backdrop-blur shadow-lg',
             )}
         >
-            <div className="w-full max-w-5xl mx-auto px-4">
+            <AppContainer>
                 {isDesktop && <DesktopNav />}
                 {!isDesktop && <MobileNav />}
-            </div>
+            </AppContainer>
         </nav>
     );
 };

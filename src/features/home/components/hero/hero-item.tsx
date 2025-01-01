@@ -1,7 +1,9 @@
+import CarouselPagination from '@/components/carousel-pagination';
+import AppContainer from '@/components/container';
 import StarRating from '@/components/star-rating';
 import Typography from '@/components/typography';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { CarouselItem } from '@/components/ui/carousel';
 import Vignette from '@/components/vignette';
 import {
@@ -11,16 +13,17 @@ import {
     getImageUrl,
 } from '@/lib/utils';
 import { MovieGenreDto, SearchMovieDto } from '@/types/movie';
-import { FaArrowLeft, FaArrowRight, FaPlayCircle } from 'react-icons/fa';
+import { FaPlayCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface Props extends SearchMovieDto {
     genres?: {
         genres: MovieGenreDto[];
     };
-    onScroll?: (value: 'prev' | 'next') => void;
+    onNavigate?: (value: 'prev' | 'next') => void;
 }
 
-const HeroItem = ({ onScroll, genres, ...movie }: Props) => {
+const HeroItem = ({ onNavigate, genres, ...movie }: Props) => {
     // Find movie genre names
     const movieGenres = movie.genre_ids.map((genreId) =>
         getGenreNameById(genreId, genres),
@@ -40,7 +43,7 @@ const HeroItem = ({ onScroll, genres, ...movie }: Props) => {
         >
             <Vignette className="h-[100px] opacity-[50%] w-full top-0 rotate-180 z-[2] absolute" />
             <Vignette className="h-[400px] w-full bottom-0 z-[2] absolute" />
-            <div className="w-full h-full max-w-5xl mx-auto flex flex-col gap-6 justify-end items-start sm:flex-row sm:items-end sm:justify-between pb-32 relative z-[3] px-4">
+            <AppContainer className=" h-full flex flex-col gap-6 justify-end items-start sm:flex-row sm:items-end sm:justify-between pb-40 relative z-[3]">
                 <div className="w-full max-w-xl">
                     <div className="mb-6">
                         <Typography variant="h1" className="font-bold mb-1.5">
@@ -83,28 +86,16 @@ const HeroItem = ({ onScroll, genres, ...movie }: Props) => {
                         <Button>
                             <FaPlayCircle /> Watch Now
                         </Button>
-                        <Button variant={'link'}>Read Overview</Button>
+                        <Link
+                            to={`/movie/${movie.id}`}
+                            className={buttonVariants({ variant: 'link' })}
+                        >
+                            Read Overview
+                        </Link>
                     </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                    <Button
-                        onClick={() => onScroll?.('prev')}
-                        variant={'outline'}
-                        size={'icon'}
-                        className="border-muted-foreground rounded-full"
-                    >
-                        <FaArrowLeft />
-                    </Button>
-                    <Button
-                        onClick={() => onScroll?.('next')}
-                        variant={'outline'}
-                        size={'icon'}
-                        className="border-muted-foreground rounded-full"
-                    >
-                        <FaArrowRight />
-                    </Button>
-                </div>
-            </div>
+                <CarouselPagination onNavigate={onNavigate} />
+            </AppContainer>
         </CarouselItem>
     );
 };

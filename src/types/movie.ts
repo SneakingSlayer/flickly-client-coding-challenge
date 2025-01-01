@@ -81,3 +81,8 @@ export interface MovieGenreDto {
     id: number;
     name: string;
 }
+
+export interface MovieListsQuery {
+    region?: string;
+    page?: number;
+}

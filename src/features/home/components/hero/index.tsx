@@ -1,14 +1,10 @@
-import {
-    Carousel,
-    CarouselApi,
-    CarouselContent,
-} from '@/components/ui/carousel';
+import { Carousel, CarouselContent } from '@/components/ui/carousel';
 import { MovieGenreDto, SearchMovieDto } from '@/types/movie';
 import { Paginated } from '@/types/pagination';
-import { useCallback, useState } from 'react';
 import HeroItem from './hero-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import Vignette from '@/components/vignette';
+import usePaginateCarousel from '@/hooks/use-paginate-carousel';
 
 interface Props {
     genres?: { genres: MovieGenreDto[] };
@@ -17,23 +13,7 @@ interface Props {
 }
 
 const Hero = ({ genres, trending, isLoading }: Props) => {
-    const [api, setApi] = useState<CarouselApi>();
-
-    /**
-     * Handles scroll actions by determining the direction ('prev' or 'next') and calling the respective scroll function.
-     *
-     * @param {('prev' | 'next')} state - The scroll direction. If 'next', scrolls to the next item. If 'prev', scrolls to the previous item.
-     * @returns {void}
-     */
-    const handleScroll = useCallback(
-        (state: 'prev' | 'next') => {
-            if (!api) return;
-
-            const scrollFn = state === 'next' ? api.scrollNext : api.scrollPrev;
-            scrollFn();
-        },
-        [api],
-    );
+    const { setApi, handleScroll } = usePaginateCarousel();
 
     return (
         <>
@@ -49,7 +29,7 @@ const Hero = ({ genres, trending, isLoading }: Props) => {
                         {trending?.results.map((movie, i) => (
                             <HeroItem
                                 key={i}
-                                onScroll={(dir) => handleScroll(dir)}
+                                onNavigate={(dir) => handleScroll(dir)}
                                 genres={genres}
                                 {...movie}
                             />

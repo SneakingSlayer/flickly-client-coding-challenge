@@ -2,6 +2,7 @@ import axiosInstance from '@/lib/axiosConfig';
 import {
     GetMovieGenresQuery,
     MovieGenreDto,
+    MovieListsQuery,
     SearchMovieDto,
     TrendingMoviesQuery,
 } from '@/types/movie';
@@ -30,7 +31,6 @@ export const getTrendingMovies = async (params: TrendingMoviesQuery) => {
  * Fetches the list of movie genres from the API.
  *
  * @param {GetMovieGenresQuery} params - The query parameters for the request.
- *  - `language`: The language in which the movie genres should be returned (e.g., 'en', 'es').
  *
  * @returns {Promise<MovieGenreDto>} A promise that resolves to a `MovieGenreDto` object,
  *  which contains an array of movie genres.
@@ -40,5 +40,38 @@ export const getMovieGenres = async (params: GetMovieGenresQuery) => {
         await axiosInstance.get<{ genres: MovieGenreDto[] }>(`/movies/genres`, {
             params,
         })
+    ).data;
+};
+
+/**
+ * Fetches a list of popular movies from the API.
+ *
+ * @param {MovieListsQuery} params - The query parameters to filter or customize the request.
+ *
+ * @returns {Promise<Paginated<SearchMovieDto>>} A promise that resolves to a paginated list of popular movies.
+ */
+export const getPopularMovies = async (params: MovieListsQuery) => {
+    return (
+        await axiosInstance.get<Paginated<SearchMovieDto>>(`/movies/popular`, {
+            params,
+        })
+    ).data;
+};
+
+/**
+ * Fetches a list of top-rated movies from the API.
+ *
+ * @param {MovieListsQuery} params - The query parameters to customize the request.
+ *
+ * @returns {Promise<Paginated<SearchMovieDto>>} A promise that resolves to a paginated list of top-rated movies.
+ */
+export const getTopRatedMovies = async (params: MovieListsQuery) => {
+    return (
+        await axiosInstance.get<Paginated<SearchMovieDto>>(
+            `/movies/top-rated`,
+            {
+                params,
+            },
+        )
     ).data;
 };
