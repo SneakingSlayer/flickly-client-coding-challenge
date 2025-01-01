@@ -43,10 +43,13 @@ const HeroItem = ({ onNavigate, genres, ...movie }: Props) => {
         >
             <Vignette className="h-[100px] opacity-[50%] w-full top-0 rotate-180 z-[2] absolute" />
             <Vignette className="h-[400px] w-full bottom-0 z-[2] absolute" />
-            <AppContainer className=" h-full flex flex-col gap-6 justify-end items-start sm:flex-row sm:items-end sm:justify-between pb-40 relative z-[3]">
+            <AppContainer className="h-full flex flex-col gap-6 justify-end items-start sm:flex-row sm:items-end sm:justify-between pb-24 sm:pb-40 relative z-[3]">
                 <div className="w-full max-w-xl">
                     <div className="mb-6">
-                        <Typography variant="h1" className="font-bold mb-1.5">
+                        <Typography
+                            variant="h1"
+                            className="line-clamp-2 sm:line-clamp-none font-bold mb-1.5"
+                        >
                             {movie.title}
                         </Typography>
 
