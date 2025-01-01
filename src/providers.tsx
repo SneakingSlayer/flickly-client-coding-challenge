@@ -17,7 +17,7 @@ const AppProviders = ({ children }: { children: React.ReactNode }) => {
     return (
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
-                <ThemeProvider>{children}</ThemeProvider>
+                <ThemeProvider defaultTheme="dark">{children}</ThemeProvider>
             </QueryClientProvider>
         </BrowserRouter>
     );
