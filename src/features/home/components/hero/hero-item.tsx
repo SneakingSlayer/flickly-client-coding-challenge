@@ -4,7 +4,7 @@ import StarRating from '@/components/star-rating';
 import Typography from '@/components/typography';
 import { Badge } from '@/components/ui/badge';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { CarouselItem } from '@/components/ui/carousel';
+import { CarouselItem, useCarousel } from '@/components/ui/carousel';
 import Vignette from '@/components/vignette';
 import {
     cn,
@@ -20,10 +20,11 @@ interface Props extends SearchMovieDto {
     genres?: {
         genres: MovieGenreDto[];
     };
-    onNavigate?: (value: 'prev' | 'next') => void;
 }
 
-const HeroItem = ({ onNavigate, genres, ...movie }: Props) => {
+const HeroItem = ({ genres, ...movie }: Props) => {
+    const { scrollNext, scrollPrev } = useCarousel();
+
     // Find movie genre names
     const movieGenres = movie.genre_ids.map((genreId) =>
         getGenreNameById(genreId, genres),
@@ -97,7 +98,14 @@ const HeroItem = ({ onNavigate, genres, ...movie }: Props) => {
                         </Link>
                     </div>
                 </div>
-                <CarouselPagination onNavigate={onNavigate} />
+
+                <CarouselPagination
+                    onNavigate={(dir) => {
+                        const scrollFn =
+                            dir === 'next' ? scrollNext : scrollPrev;
+                        scrollFn();
+                    }}
+                />
             </AppContainer>
         </CarouselItem>
     );

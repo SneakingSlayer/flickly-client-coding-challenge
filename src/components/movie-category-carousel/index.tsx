@@ -2,10 +2,14 @@ import { SearchMovieDto } from '@/types/movie';
 import { Paginated } from '@/types/pagination';
 import Typography from '../typography';
 import { getImageUrl } from '@/lib/utils';
-import { Carousel, CarouselContent, CarouselItem } from '../ui/carousel';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    useCarousel,
+} from '../ui/carousel';
 import { Link } from 'react-router-dom';
 import CarouselPagination from '../carousel-pagination';
-import usePaginateCarousel from '@/hooks/use-paginate-carousel';
 import { Skeleton } from '../ui/skeleton';
 
 interface Props {
@@ -15,7 +19,6 @@ interface Props {
 }
 
 const MovieCategoryCarousel = ({ data, title, isLoading }: Props) => {
-    const { setApi, handleScrollSnaplist } = usePaginateCarousel();
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
@@ -41,28 +44,38 @@ const MovieCategoryCarousel = ({ data, title, isLoading }: Props) => {
             )}
 
             {!isLoading && (
-                <Carousel setApi={setApi} className="mb-6">
-                    <CarouselContent className="gap-0">
-                        {data?.results.map((movie, i) => (
-                            <CarouselItem
-                                key={i}
-                                className="h-[225px] max-w-[150px]"
-                            >
-                                <Link to={`/movie/${movie.id}`}>
-                                    <div className="h-[225px] max-w-[150px] rounded-md overflow-hidden">
-                                        <img
-                                            src={getImageUrl(movie.poster_path)}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                </Link>
-                            </CarouselItem>
-                        ))}
-                    </CarouselContent>
+                <Carousel className="mb-6">
+                    <CarouselContentWrapper data={data} />
                 </Carousel>
             )}
-            <div className="flex justify-end">
-                <CarouselPagination onNavigate={handleScrollSnaplist} />
+        </>
+    );
+};
+
+const CarouselContentWrapper = ({
+    data,
+}: {
+    data?: Paginated<SearchMovieDto>;
+}) => {
+    const { scrollSnaplist } = useCarousel();
+    return (
+        <>
+            <CarouselContent className="gap-0">
+                {data?.results.map((movie, i) => (
+                    <CarouselItem key={i} className="h-[225px] max-w-[150px]">
+                        <Link to={`/movie/${movie.id}`}>
+                            <div className="h-[225px] max-w-[150px] rounded-md overflow-hidden">
+                                <img
+                                    src={getImageUrl(movie.poster_path, 'w200')}
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                        </Link>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            <div className="flex justify-end pt-5">
+                <CarouselPagination onNavigate={scrollSnaplist} />
             </div>
         </>
     );

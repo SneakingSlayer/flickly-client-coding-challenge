@@ -4,7 +4,6 @@ import { Paginated } from '@/types/pagination';
 import HeroItem from './hero-item';
 import { Skeleton } from '@/components/ui/skeleton';
 import Vignette from '@/components/vignette';
-import usePaginateCarousel from '@/hooks/use-paginate-carousel';
 
 interface Props {
     genres?: { genres: MovieGenreDto[] };
@@ -13,13 +12,10 @@ interface Props {
 }
 
 const Hero = ({ genres, trending, isLoading }: Props) => {
-    const { setApi, handleScroll } = usePaginateCarousel();
-
     return (
         <>
             {!isLoading && (
                 <Carousel
-                    setApi={setApi}
                     className="w-full"
                     opts={{
                         loop: true,
@@ -27,12 +23,7 @@ const Hero = ({ genres, trending, isLoading }: Props) => {
                 >
                     <CarouselContent>
                         {trending?.results.map((movie, i) => (
-                            <HeroItem
-                                key={i}
-                                onNavigate={(dir) => handleScroll(dir)}
-                                genres={genres}
-                                {...movie}
-                            />
+                            <HeroItem key={i} genres={genres} {...movie} />
                         ))}
                     </CarouselContent>
                 </Carousel>
