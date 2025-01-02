@@ -5,6 +5,8 @@ import {
     MovieCreditsDto,
     MovieCreditsQuery,
     MovieGenreDto,
+    MovieImagesDto,
+    MovieImagesQuery,
     MovieListsQuery,
     MovieRecommendationsQuery,
     SearchMovieDto,
@@ -147,6 +149,22 @@ export const getMovieCredits = async (
 ) => {
     return (
         await axiosInstance.get<MovieCreditsDto>(`/movies/${id}/credits`, {
+            params,
+        })
+    ).data;
+};
+
+/**
+ * Fetches the images associated with a specific movie by its ID from the API.
+ *
+ * @param {number} id - The unique identifier of the movie for which to fetch the images.
+ * @param {MovieImagesQuery} params - The query parameters used to filter or modify the image data (e.g., language, image size).
+ * @returns {Promise<MovieImagesDto>} A promise that resolves to a MovieImagesDto object containing the movie's image data.
+ * @throws {AxiosError} If the request fails or an error occurs during the data retrieval, the function will throw an error.
+ */
+export const getMovieImages = async (id: number, params: MovieImagesQuery) => {
+    return (
+        await axiosInstance.get<MovieImagesDto>(`/movies/${id}/images`, {
             params,
         })
     ).data;

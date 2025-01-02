@@ -70,10 +70,10 @@ const MovieProfile = ({ isLoading, movie }: Props) => {
 
 const LoadingMovieProfile = () => {
     return (
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col sm:justify-start justify-center items-center sm:items-start gap-2 w-full h-full">
             <Skeleton className="w-full max-w-[300px] h-8" />
             <Skeleton className="w-full max-w-[200px] h-8" />
-            <Skeleton className="w-full grow" />
+            <Skeleton className="w-full grow h-[200px]" />
         </div>
     );
 };

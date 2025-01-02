@@ -37,7 +37,10 @@ const MovieCreditsCarousel = ({ data, title, isLoading }: Props) => {
             {isLoading && (
                 <div className="overflow-hidden flex gap-4 mb-6">
                     {[...Array(10)].map((_, i) => (
-                        <Skeleton key={i} className="h-[225px] min-w-[150px]" />
+                        <Skeleton
+                            key={i}
+                            className="h-[100px] w-[100px] rounded-full overflow-hidden"
+                        />
                     ))}
                 </div>
             )}

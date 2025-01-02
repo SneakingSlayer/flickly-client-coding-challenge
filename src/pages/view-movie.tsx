@@ -7,11 +7,13 @@ import MovieProfile from '@/features/movie/components/movie-profile';
 import {
     getMovieById,
     getMovieCredits,
+    getMovieImages,
     getMovieRecommendations,
 } from '@/services/movie-service';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import MovieImages from '@/features/movie/components/movie-images';
 
 const ViewMoviePage = () => {
     const navigate = useNavigate();
@@ -39,9 +41,16 @@ const ViewMoviePage = () => {
     });
 
     // Get movie credits
-    const { data: credits } = useQuery({
+    const { data: credits, isLoading: isLoadingCredits } = useQuery({
         queryKey: ['get-movie-credits', movieId],
         queryFn: () => getMovieCredits(Number(movieId), {}),
+        enabled: !!movieId,
+    });
+
+    // Get movie images
+    const { data: images, isLoading: isLoadingImages } = useQuery({
+        queryKey: ['get-movie-images', movieId],
+        queryFn: () => getMovieImages(Number(movieId), {}),
         enabled: !!movieId,
     });
 
@@ -62,10 +71,14 @@ const ViewMoviePage = () => {
                 </div>
 
                 <div className="mb-8">
+                    <MovieImages isLoading={isLoadingImages} images={images} />
+                </div>
+
+                <div className="mb-8">
                     <MovieCreditsCarousel
                         title="Cast & Crew"
                         data={{ cast: credits?.cast, crew: credits?.crew }}
-                        isLoading={isLoadingRecommendations}
+                        isLoading={isLoadingCredits}
                     />
                 </div>
 
