@@ -72,6 +72,13 @@ const MobileNav = ({ value, onSubmit, onValueChange }: Props) => {
                                 return (
                                     <li key={i}>
                                         <NavLink
+                                            onClick={(e) => {
+                                                if (route.path !== '/') {
+                                                    e.preventDefault();
+                                                    return;
+                                                }
+                                                setOpen(false);
+                                            }}
                                             to={route.path}
                                             key={i}
                                             className={({ isActive }) =>

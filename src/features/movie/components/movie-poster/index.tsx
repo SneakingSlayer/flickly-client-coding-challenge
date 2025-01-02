@@ -6,7 +6,7 @@ interface Props {
 
 const MoviePoster = ({ imgSrc }: Props) => {
     return (
-        <div className="h-[225px] w-[150px] sm:h-[337.5px] sm:min-w-[225px] sm:w-[225px] overflow-hidden rounded-md">
+        <div className="bg-muted h-[225px] w-[150px] sm:h-[337.5px] sm:min-w-[225px] sm:w-[225px] overflow-hidden rounded-md">
             {imgSrc && (
                 <img
                     className="h-full w-full object-cover"

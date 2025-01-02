@@ -26,6 +26,12 @@ const DesktopNav = ({ onOpenSearchForm }: Props) => {
                         return (
                             <li key={i}>
                                 <NavLink
+                                    onClick={(e) => {
+                                        if (route.path !== '/') {
+                                            e.preventDefault();
+                                            return;
+                                        }
+                                    }}
                                     to={route.path}
                                     className={({ isActive }) =>
                                         cn(
