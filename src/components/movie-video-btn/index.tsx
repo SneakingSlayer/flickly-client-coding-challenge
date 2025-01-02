@@ -27,6 +27,9 @@ const MovieVideoBtn = ({
         enabled: !!movieId && execute,
     });
 
+    /**
+     * Handles the action of opening a YouTube teaser video in a new tab.
+     */
     const handleWatch = useCallback(() => {
         if (videos?.results) {
             const url = videos.results?.find(
@@ -45,6 +48,7 @@ const MovieVideoBtn = ({
         }
     }, [videos]);
 
+    // Execute query
     useEffect(() => {
         if (execute) void handleWatch();
     }, [handleWatch, execute]);
