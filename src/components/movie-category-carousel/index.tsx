@@ -1,7 +1,6 @@
 import { SearchMovieDto } from '@/types/movie';
 import { Paginated } from '@/types/pagination';
 import Typography from '../typography';
-import { getImageUrl } from '@/lib/utils';
 import {
     Carousel,
     CarouselContent,
@@ -11,6 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import CarouselPagination from '../carousel-pagination';
 import { Skeleton } from '../ui/skeleton';
+import MovieCard from '../movie-card';
 
 interface Props {
     data?: Paginated<SearchMovieDto>;
@@ -60,17 +60,10 @@ const CarouselContentWrapper = ({
     const { scrollSnaplist } = useCarousel();
     return (
         <>
-            <CarouselContent className="gap-0">
+            <CarouselContent className="gap-4">
                 {data?.results.map((movie, i) => (
                     <CarouselItem key={i} className="h-[225px] max-w-[150px]">
-                        <Link to={`/movie/${movie.id}`}>
-                            <div className="h-[225px] max-w-[150px] rounded-md overflow-hidden">
-                                <img
-                                    src={getImageUrl(movie.poster_path, 'w200')}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                        </Link>
+                        <MovieCard key={i} {...movie} />
                     </CarouselItem>
                 ))}
             </CarouselContent>

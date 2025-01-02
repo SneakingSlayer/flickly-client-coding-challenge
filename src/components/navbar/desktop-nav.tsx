@@ -1,25 +1,28 @@
 import Typography from '../typography';
 import { routes } from './constants';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Button } from '../ui/button';
 import { FaSearch } from 'react-icons/fa';
 
-const DesktopNav = () => {
+interface Props {
+    onOpenSearchForm?: () => void;
+}
+
+const DesktopNav = ({ onOpenSearchForm }: Props) => {
     return (
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-8">
-                <div>
+                <Link to={'/'}>
                     <Typography
                         variant="h5"
                         className="!tracking-wider font-black "
                     >
                         flick<span className="text-primary">ly.</span>
                     </Typography>
-                </div>
-                <ul className="flex gap-4">
+                </Link>
+                <ul className="flex gap-6">
                     {routes.map((route, i) => {
-                        const Icon = route.icon;
                         return (
                             <li key={i}>
                                 <NavLink
@@ -31,7 +34,6 @@ const DesktopNav = () => {
                                         )
                                     }
                                 >
-                                    <Icon fontSize={13} />
                                     <Typography
                                         variant="extra-small"
                                         className="font-medium"
@@ -45,7 +47,12 @@ const DesktopNav = () => {
                 </ul>
             </div>
             <div className="flex items-center gap-2">
-                <Button variant={'link'} size={'icon'} className="text-xs">
+                <Button
+                    onClick={onOpenSearchForm}
+                    variant={'link'}
+                    size={'icon'}
+                    className="text-xs"
+                >
                     <FaSearch />
                 </Button>
                 <Button variant={'link'} size={'sm'} className="text-xs">

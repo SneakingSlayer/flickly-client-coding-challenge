@@ -39,7 +39,7 @@ const HomePage = () => {
                 trending={trending}
             />
 
-            <AppContainer className="mt-[-70px] sm:mt-[-100px] relative z-[99] mb-4">
+            <AppContainer className="mt-[-70px] sm:mt-[-100px] relative z-[10] mb-4">
                 <MovieCategoryCarousel
                     isLoading={isLoadingPopular}
                     title="What's Popular?"
@@ -47,7 +47,7 @@ const HomePage = () => {
                 />
             </AppContainer>
 
-            <AppContainer className="relative z-[99] mb-8">
+            <AppContainer className="relative z-[10] mb-8">
                 <MovieCategoryCarousel
                     isLoading={isLoadingTopRated}
                     title="Top Rated Films"

@@ -6,21 +6,29 @@ import { IoMenu } from 'react-icons/io5';
 import { Input } from '../ui/input';
 import { FaSearch } from 'react-icons/fa';
 import { routes } from './constants';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
-const MobileNav = () => {
+interface Props {
+    onSubmit?: (e: React.FormEvent<HTMLFormElement>) => void;
+    value?: string;
+    onValueChange?: (e: string) => void;
+}
+
+const MobileNav = ({ value, onSubmit, onValueChange }: Props) => {
+    const [open, setOpen] = useState(false);
     return (
         <div className="flex items-center justify-between">
-            <div>
+            <Link to={'/'}>
                 <Typography
                     variant="h5"
                     className="!tracking-wider font-black "
                 >
                     flick<span className="text-primary">ly.</span>
                 </Typography>
-            </div>
+            </Link>
 
-            <Sheet>
+            <Sheet open={open} onOpenChange={() => setOpen(!open)}>
                 <SheetTrigger
                     className={cn(
                         buttonVariants({
@@ -38,9 +46,19 @@ const MobileNav = () => {
                             flick<span className="text-primary">ly.</span>
                         </Typography>
                         <div className="mb-4">
-                            <form className="relative">
+                            <form
+                                onSubmit={(e) => {
+                                    setOpen(!open);
+                                    onSubmit?.(e);
+                                }}
+                                className="relative"
+                            >
                                 <Input
-                                    placeholder="Search movies..."
+                                    onChange={(e) =>
+                                        onValueChange?.(e.target.value)
+                                    }
+                                    value={value}
+                                    placeholder="What are you looking for?"
                                     className="text-sm"
                                 />
                                 <div className="text-primary absolute top-[12px] right-[12px]">

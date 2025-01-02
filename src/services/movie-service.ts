@@ -4,6 +4,7 @@ import {
     MovieGenreDto,
     MovieListsQuery,
     SearchMovieDto,
+    SearchMovieQuery,
     TrendingMoviesQuery,
 } from '@/types/movie';
 
@@ -73,5 +74,22 @@ export const getTopRatedMovies = async (params: MovieListsQuery) => {
                 params,
             },
         )
+    ).data;
+};
+
+/**
+ * Searches for movies based on the provided query parameters.
+ *
+ * @param {SearchMovieDto} params - The search parameters to filter or customize the request.
+ *
+ * @returns {Promise<Paginated<SearchMovieDto>>} A promise that resolves to a paginated list
+ *   of search results, which will be in the form of `Paginated<SearchMovieDto>`. This contains
+ *   an array of movie objects (`SearchMovieDto`) and metadata related to pagination.
+ */
+export const searchMovies = async (params: SearchMovieQuery) => {
+    return (
+        await axiosInstance.get<Paginated<SearchMovieDto>>(`/movies/search`, {
+            params,
+        })
     ).data;
 };
