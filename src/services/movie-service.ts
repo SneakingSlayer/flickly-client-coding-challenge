@@ -2,6 +2,8 @@ import axiosInstance from '@/lib/axiosConfig';
 import {
     GetMovieByIdDto,
     GetMovieGenresQuery,
+    MovieCreditsDto,
+    MovieCreditsQuery,
     MovieGenreDto,
     MovieListsQuery,
     MovieRecommendationsQuery,
@@ -129,4 +131,23 @@ export const getMovieRecommendations = async (
  */
 export const getMovieById = async (id: number) => {
     return (await axiosInstance.get<GetMovieByIdDto>(`/movies/${id}`)).data;
+};
+
+/**
+ * Fetches the movie credits for a specific movie by its ID from the API.
+ *
+ * @param {number} id - The unique identifier of the movie for which to fetch the credits.
+ * @param {MovieCreditsQuery} params - The query parameters to filter or modify the movie credits data.
+ * @returns {Promise<MovieCreditsDto>} A promise that resolves to the movie credits data, including information about the cast and crew.
+ * @throws {AxiosError} If the request fails or an error occurs during the data retrieval, the function will throw an error.
+ */
+export const getMovieCredits = async (
+    id: number,
+    params: MovieCreditsQuery,
+) => {
+    return (
+        await axiosInstance.get<MovieCreditsDto>(`/movies/${id}/credits`, {
+            params,
+        })
+    ).data;
 };

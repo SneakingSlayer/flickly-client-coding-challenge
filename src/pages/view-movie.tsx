@@ -1,10 +1,12 @@
 import AppContainer from '@/components/container';
 import MovieCategoryCarousel from '@/components/movie-category-carousel';
 import MovieBackdrop from '@/features/movie/components/movie-backdrop';
+import MovieCreditsCarousel from '@/features/movie/components/movie-credits-carousel';
 import MoviePoster from '@/features/movie/components/movie-poster';
 import MovieProfile from '@/features/movie/components/movie-profile';
 import {
     getMovieById,
+    getMovieCredits,
     getMovieRecommendations,
 } from '@/services/movie-service';
 import { useQuery } from '@tanstack/react-query';
@@ -36,6 +38,13 @@ const ViewMoviePage = () => {
         enabled: !!movieId,
     });
 
+    // Get movie credits
+    const { data: credits } = useQuery({
+        queryKey: ['get-movie-credits', movieId],
+        queryFn: () => getMovieCredits(Number(movieId), {}),
+        enabled: !!movieId,
+    });
+
     // Navigate to 404 if not found.
     useEffect(() => {
         if (isErrorMovie) {
@@ -47,9 +56,17 @@ const ViewMoviePage = () => {
         <>
             <AppContainer className="pt-20">
                 <MovieBackdrop imgSrc={movie?.backdrop_path} />
-                <div className="flex sm:items-start items-center sm:flex-row flex-col gap-4 mt-[-180px] sm:mt-[-150px] relative z-[2] ">
+                <div className="mb-8 flex sm:items-start items-center sm:flex-row flex-col gap-4 mt-[-180px] sm:mt-[-150px] relative z-[2] ">
                     <MoviePoster imgSrc={movie?.poster_path} />
                     <MovieProfile isLoading={isLoadingMovie} movie={movie} />
+                </div>
+
+                <div className="mb-8">
+                    <MovieCreditsCarousel
+                        title="Cast & Crew"
+                        data={{ cast: credits?.cast, crew: credits?.crew }}
+                        isLoading={isLoadingRecommendations}
+                    />
                 </div>
 
                 <div>
