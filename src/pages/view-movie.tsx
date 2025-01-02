@@ -63,8 +63,10 @@ const ViewMoviePage = () => {
 
     return (
         <>
-            <AppContainer className="pt-20">
+            <AppContainer className="pt-20 px-0">
                 <MovieBackdrop imgSrc={movie?.backdrop_path} />
+            </AppContainer>
+            <AppContainer>
                 <div className="mb-8 flex sm:items-start items-center sm:flex-row flex-col gap-4 mt-[-180px] sm:mt-[-150px] relative z-[2] ">
                     <MoviePoster imgSrc={movie?.poster_path} />
                     <MovieProfile isLoading={isLoadingMovie} movie={movie} />

@@ -1,15 +1,11 @@
-import CarouselPagination from '@/components/carousel-pagination';
 import Typography from '@/components/typography';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    useCarousel,
-} from '@/components/ui/carousel';
+import { Carousel } from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getImageUrl } from '@/lib/utils';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { MovieCastDto, MovieCrewDto } from '@/types/movie';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import CarouselContentWrapper from './carousel-content-wrapper';
+import { TabType } from './types';
 
 interface Props {
     data?: { cast?: MovieCastDto[]; crew?: MovieCrewDto[] };
@@ -18,20 +14,39 @@ interface Props {
 }
 
 const MovieCreditsCarousel = ({ data, title, isLoading }: Props) => {
+    const [tab, setTab] = useState<TabType>('cast');
+
+    const crewData = data?.crew?.map((crew) => ({
+        profile_path: crew?.profile_path,
+        name: crew.name,
+        position: crew.job,
+    }));
+
+    const castData = data?.cast?.map((cast) => ({
+        profile_path: cast?.profile_path,
+        name: cast.name,
+        position: cast.character,
+    }));
+
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
                 <Typography variant="h4" className="font-semibold">
                     {title}
                 </Typography>
-                <Link to={'/'}>
-                    <Typography
-                        variant="small"
-                        className="font-semibold text-primary"
-                    >
-                        See All
-                    </Typography>
-                </Link>
+                <Tabs
+                    value={tab}
+                    defaultValue={tab}
+                    onValueChange={(value) => {
+                        setTab(value as TabType);
+                    }}
+                    className="w-auto"
+                >
+                    <TabsList>
+                        <TabsTrigger value="cast">Cast</TabsTrigger>
+                        <TabsTrigger value="crew">Crew</TabsTrigger>
+                    </TabsList>
+                </Tabs>
             </div>
 
             {isLoading && (
@@ -39,7 +54,7 @@ const MovieCreditsCarousel = ({ data, title, isLoading }: Props) => {
                     {[...Array(10)].map((_, i) => (
                         <Skeleton
                             key={i}
-                            className="h-[100px] w-[100px] rounded-full overflow-hidden"
+                            className="min-h-[100px] min-w-[100px] max-h-[100px] max-w-[100px] rounded-full overflow-hidden"
                         />
                     ))}
                 </div>
@@ -47,69 +62,12 @@ const MovieCreditsCarousel = ({ data, title, isLoading }: Props) => {
 
             {!isLoading && (
                 <Carousel className="mb-6">
-                    <CarouselContentWrapper data={data} />
+                    <CarouselContentWrapper
+                        tab={tab}
+                        data={tab === 'crew' ? crewData : castData}
+                    />
                 </Carousel>
             )}
-        </>
-    );
-};
-
-const CarouselContentWrapper = ({
-    data,
-}: {
-    data?: { cast?: MovieCastDto[]; crew?: MovieCrewDto[] };
-}) => {
-    const { scrollSnaplist } = useCarousel();
-    return (
-        <>
-            <CarouselContent className="gap-6 min-w-0">
-                {data?.cast?.map((cast, i) => (
-                    <CarouselItem
-                        key={i}
-                        className="min-w-0 max-w-[100px] text-center"
-                    >
-                        <div className="min-w-0 gap-3 flex flex-col items-center justify-center">
-                            <div className="h-[100px] w-[100px] rounded-full overflow-hidden">
-                                {cast.profile_path && (
-                                    <img
-                                        className="h-full w-full object-cover"
-                                        src={getImageUrl(
-                                            cast.profile_path,
-                                            'w200',
-                                        )}
-                                    />
-                                )}
-
-                                {!cast.profile_path && (
-                                    <div className="flex items-center justify-center h-full w-full rounded-full bg-muted">
-                                        {cast.name
-                                            .split(' ')
-                                            .map((word) => word?.[0] ?? '')
-                                            .join('')}
-                                    </div>
-                                )}
-                            </div>
-                            <div>
-                                <Typography
-                                    variant="extra-small"
-                                    className="whitespace-nowrap truncate max-w-[100px]"
-                                >
-                                    {cast.name}
-                                </Typography>
-                                <Typography
-                                    variant="extra-small"
-                                    className="whitespace-nowrap truncate max-w-[100px] text-muted-foreground"
-                                >
-                                    {cast.character}
-                                </Typography>
-                            </div>
-                        </div>
-                    </CarouselItem>
-                ))}
-            </CarouselContent>
-            <div className="flex justify-end pt-5">
-                <CarouselPagination onNavigate={scrollSnaplist} />
-            </div>
         </>
     );
 };

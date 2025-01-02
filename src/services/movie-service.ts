@@ -2,6 +2,7 @@ import axiosInstance from '@/lib/axiosConfig';
 import {
     GetMovieByIdDto,
     GetMovieGenresQuery,
+    GetMovieVideosQuery,
     MovieCreditsDto,
     MovieCreditsQuery,
     MovieGenreDto,
@@ -9,6 +10,7 @@ import {
     MovieImagesQuery,
     MovieListsQuery,
     MovieRecommendationsQuery,
+    MovieVideosDto,
     SearchMovieDto,
     SearchMovieQuery,
     TrendingMoviesQuery,
@@ -165,6 +167,27 @@ export const getMovieCredits = async (
 export const getMovieImages = async (id: number, params: MovieImagesQuery) => {
     return (
         await axiosInstance.get<MovieImagesDto>(`/movies/${id}/images`, {
+            params,
+        })
+    ).data;
+};
+
+/**
+ * Fetches the video information for a specific movie from the API.
+ *
+ * @param {number} id - The unique identifier of the movie.
+ * @param {GetMovieVideosQuery} params - The query parameters to customize or filter the video results (e.g., language, video type).
+ *
+ * @returns {Promise<MovieVideosDto>} - A promise that resolves to the movie video data, containing details like video IDs, types, etc.
+ *
+ * @throws {AxiosError} - Throws an error if the network request fails or if there is an issue with the API response.
+ */
+export const getMovieVideos = async (
+    id: number,
+    params: GetMovieVideosQuery,
+) => {
+    return (
+        await axiosInstance.get<MovieVideosDto>(`/movies/${id}/videos`, {
             params,
         })
     ).data;
