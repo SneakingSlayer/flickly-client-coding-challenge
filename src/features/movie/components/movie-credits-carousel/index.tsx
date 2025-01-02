@@ -39,7 +39,7 @@ const MovieCreditsCarousel = ({ data, title, isLoading }: Props) => {
                     {[...Array(10)].map((_, i) => (
                         <Skeleton
                             key={i}
-                            className="h-[100px] w-[100px] rounded-full overflow-hidden"
+                            className="min-h-[100px] min-w-[100px] max-h-[100px] max-w-[100px] rounded-full overflow-hidden"
                         />
                     ))}
                 </div>

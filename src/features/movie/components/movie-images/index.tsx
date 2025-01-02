@@ -38,14 +38,18 @@ const MovieImages = ({ images, isLoading }: Props) => {
             <div className="grid  grid-cols-2 md:grid-cols-4 gap-4">
                 {isLoading &&
                     [...Array(4)].map((_, i) => (
-                        <Skeleton key={i} className="w-full xs:h-[150px]" />
+                        <Skeleton
+                            key={i}
+                            className="w-full h-[120px] sm:h-[150px]"
+                        />
                     ))}
+
                 {!isLoading && (
                     <>
                         {images?.backdrops?.slice(0, 3)?.map((backdrop, i) => (
                             <div
                                 key={i}
-                                className=" xs:h-[150px] w-full rounded-md overflow-hidden"
+                                className="bg-muted h-[120px] sm:h-[150px] w-full rounded-md overflow-hidden"
                             >
                                 <img
                                     src={getImageUrl(backdrop.file_path)}
@@ -54,7 +58,7 @@ const MovieImages = ({ images, isLoading }: Props) => {
                             </div>
                         ))}
 
-                        <div className="cursor-pointer  xs:h-[150px] w-full bg-muted rounded-md flex justify-center items-center">
+                        <div className="cursor-pointer h-[120px] sm:h-[150px] w-full bg-muted rounded-md flex justify-center items-center">
                             <div className="flex items-center gap-1 flex-col justify-center">
                                 <Typography variant="h2">
                                     <HiPhoto />

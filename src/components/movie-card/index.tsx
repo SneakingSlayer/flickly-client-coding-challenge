@@ -1,8 +1,8 @@
 import { cn, getImageUrl } from '@/lib/utils';
 import { SearchMovieDto } from '@/types/movie';
 import { useState } from 'react';
-import { FaPhotoVideo } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import Typography from '../typography';
 
 interface Props extends SearchMovieDto {
     containerClassName?: string;
@@ -33,11 +33,13 @@ const MovieCard = ({ containerClassName, ...props }: Props) => {
                 )}
 
                 {(!validImg || loading) && (
-                    <div className="w-full h-full object-cover bg-muted flex justify-center items-center">
-                        <FaPhotoVideo
+                    <div className="px-2 text-center w-full h-full object-cover bg-muted flex justify-center items-center">
+                        <Typography
+                            variant="extra-small"
                             className="text-muted-foreground"
-                            fontSize={24}
-                        />
+                        >
+                            {props.title}
+                        </Typography>
                     </div>
                 )}
             </div>
