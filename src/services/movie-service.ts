@@ -1,8 +1,10 @@
 import axiosInstance from '@/lib/axiosConfig';
 import {
+    GetMovieByIdDto,
     GetMovieGenresQuery,
     MovieGenreDto,
     MovieListsQuery,
+    MovieRecommendationsQuery,
     SearchMovieDto,
     SearchMovieQuery,
     TrendingMoviesQuery,
@@ -92,4 +94,39 @@ export const searchMovies = async (params: SearchMovieQuery) => {
             params,
         })
     ).data;
+};
+
+/**
+ * Fetches movie recommendations based on a specific movie ID.
+ *
+ * @param {number} id - The ID of the movie for which to fetch recommendations. This ID should
+ *   correspond to an existing movie in the database.
+ * @param {MovieRecommendationsQuery} params - The query parameters used to customize the request.
+ *
+ * @returns {Promise<Paginated<SearchMovieDto>>} A promise that resolves to a paginated list
+ *   of movie recommendations.
+ */
+export const getMovieRecommendations = async (
+    id: number,
+    params: MovieRecommendationsQuery,
+) => {
+    return (
+        await axiosInstance.get<Paginated<SearchMovieDto>>(
+            `/movies/${id}/recommendations`,
+            { params },
+        )
+    ).data;
+};
+
+/**
+ * Fetches detailed information about a movie by its ID.
+ *
+ * @param {number} id - The ID of the movie to fetch details for. This ID should correspond to an
+ *   existing movie in the database.
+ *
+ * @returns {Promise<GetMovieByIdDto>} A promise that resolves to the detailed information of
+ *   the specified movie, in the form of a `GetMovieByIdDto` object.
+ */
+export const getMovieById = async (id: number) => {
+    return (await axiosInstance.get<GetMovieByIdDto>(`/movies/${id}`)).data;
 };

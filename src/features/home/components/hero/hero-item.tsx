@@ -15,6 +15,7 @@ import {
 import { MovieGenreDto, SearchMovieDto } from '@/types/movie';
 import { FaPlayCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 interface Props extends SearchMovieDto {
     genres?: {
@@ -67,7 +68,7 @@ const HeroItem = ({ genres, ...movie }: Props) => {
                             </Typography>
                             <Typography>·</Typography>
                             <Typography className="font-medium">
-                                2024
+                                {moment(movie.release_date).year()}
                             </Typography>
                             <Typography>·</Typography>
                             {movieGenres.map((genre, i) => (

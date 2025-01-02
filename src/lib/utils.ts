@@ -48,3 +48,21 @@ export const convertToFiveStarRating = (avg: number) => {
     const fiveStarRating = avg / 2;
     return Math.round(fiveStarRating * 2) / 2; // Round to the nearest half-star
 };
+
+/**
+ * Converts a movie's runtime in minutes to a formatted string representing hours and minutes.
+ *
+ * @param {number} data - The runtime of the movie in minutes. This should be a positive integer.
+ *
+ * @returns {string} A string representing the movie's duration in the format "{hours}hrs {minutes}mins",
+ *   or "Runtime not available" if the `data` is falsy (e.g., `0` or `undefined`).
+ */
+export const getMovieDuration = (data: number) => {
+    const runtime = data;
+    if (!runtime) return 'Runtime not available';
+
+    const hours = Math.floor(runtime / 60);
+    const minutes = runtime % 60;
+
+    return `${hours}hrs ${minutes}mins`;
+};
