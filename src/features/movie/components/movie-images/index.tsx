@@ -20,6 +20,12 @@ const MovieImages = ({ images, isLoading }: Props) => {
         [images],
     );
 
+    const combinedImages = images
+        ? Object.entries(images)
+              .filter(([key]) => key !== 'id')
+              .flatMap(([_, value]) => value)
+        : [];
+
     return (
         <>
             <div className="flex items-center justify-between gap-4 mb-4">
@@ -46,7 +52,7 @@ const MovieImages = ({ images, isLoading }: Props) => {
 
                 {!isLoading && (
                     <>
-                        {images?.backdrops?.slice(0, 3)?.map((backdrop, i) => (
+                        {combinedImages?.slice(0, 3)?.map((backdrop, i) => (
                             <div
                                 key={i}
                                 className="bg-muted h-[120px] sm:h-[150px] w-full rounded-md overflow-hidden"
