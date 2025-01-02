@@ -36,7 +36,7 @@ const HeroItem = ({ genres, ...movie }: Props) => {
 
     return (
         <CarouselItem
-            className="h-[70dvh] w-full relative"
+            className="h-[85dvh] sm:h-[70dvh] w-full relative"
             style={{
                 backgroundImage: `url('${getImageUrl(movie.backdrop_path)}')`,
                 backgroundSize: 'cover',
