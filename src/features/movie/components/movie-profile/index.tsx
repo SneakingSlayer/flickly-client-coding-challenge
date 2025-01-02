@@ -1,12 +1,14 @@
+import MovieVideoBtn from '@/components/movie-video-btn';
 import StarRating from '@/components/star-rating';
 import Typography from '@/components/typography';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { buttonVariants } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { convertToFiveStarRating, getMovieDuration } from '@/lib/utils';
 import { GetMovieByIdDto } from '@/types/movie';
 import moment from 'moment';
 import { FaPlayCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface Props {
     isLoading?: boolean;
@@ -54,10 +56,19 @@ const MovieProfile = ({ isLoading, movie }: Props) => {
 
             <div className="flex flex-col items-center sm:items-start sm:flex-col gap-3 sm:gap-4">
                 <div className="flex items-center gap-2">
-                    <Button>
+                    <Link
+                        to={String(movie?.homepage)}
+                        target="_blank"
+                        className={buttonVariants()}
+                    >
                         <FaPlayCircle /> Watch Now
-                    </Button>
-                    <Button variant={'link'}>Play Trailer</Button>
+                    </Link>
+                    <MovieVideoBtn
+                        movieId={movie?.id}
+                        variant="link"
+                        title="Watch Trailer"
+                        hasPlayIcon={false}
+                    />
                 </div>
 
                 <Typography className="text-center sm:text-left text-muted-foreground">
