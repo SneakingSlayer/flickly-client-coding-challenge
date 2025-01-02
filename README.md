@@ -1,50 +1,109 @@
-# React + TypeScript + Vite
+# Flickly
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Flickly is a simple web application for browsing and discovering movies. It uses Vite + React stack for the frontend, an Express.js backend for API handling, and the TMDB API for fetching movie data.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Find titles using search functionality
+    
+-   View detailed information about movies. 
+    
+-   View the latest, trending, most popular, and upcoming movies.
+    
+-   Built with Vite for fast-builds and HMR.
 
-## Expanding the ESLint configuration
+----------
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Getting Started
 
-- Configure the top-level `parserOptions` property like this:
+Follow the steps below to set up and run the application locally.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Prerequisites
+
+-   [Node.js](https://nodejs.org/) (v16 or higher recommended)
+    
+-   [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) package manager
+
+----------
+
+### Installation
+
+1.  Clone the repository:
+    
+    ```
+    https://github.com/SneakingSlayer/flickly-client-coding-challenge.git
+    ```
+    
+2.  Install dependencies:
+    
+    ```
+    npm install
+    ```
+    
+    Or with Yarn:
+    
+    ```
+    yarn install
+    ```
+    
+
+----------
+
+### Environment Configuration
+
+Create a `.env` file in the root directory and add the following variables:
+
+```
+VITE_BASE_URL=server_base_url
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Replace the placeholder values with your actual configuration.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+----------
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+### Running the Application
+
+#### Development Mode
+
+Run the app in development mode with hot-reloading:
+
 ```
+npm run dev
+```
+
+Or with Yarn:
+
+```
+yarn dev
+```
+
+#### Production Mode
+
+1.  Build the app:
+    
+    ```
+    npm run build
+    ```
+    
+    Or with Yarn:
+    
+    ```
+    yarn build
+    ```
+    
+2.  Start the app:
+    
+    ```
+    npm start
+    ```
+    
+    Or with Yarn:
+    
+    ```
+    yarn start
+    ```
+----------
+
+### Author
+
+- **Your Name** - [GitHub Profile](https://github.com/SneakingSlayer)
