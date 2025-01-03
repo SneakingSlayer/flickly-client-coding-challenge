@@ -5,6 +5,7 @@ import AppLayout from '@/components/layouts/app-layout';
 const HomePage = React.lazy(() => import('@/pages/home'));
 const SearchMoviesPage = React.lazy(() => import('@/pages/search'));
 const ViewMoviePage = React.lazy(() => import('@/pages/view-movie'));
+const NotFoundPage = React.lazy(() => import('@/pages/not-found'));
 
 const AppRoutes = () => {
     return (
@@ -14,6 +15,7 @@ const AppRoutes = () => {
                 <Route path="/search" element={<SearchMoviesPage />} />
                 <Route path="/movie/:id" element={<ViewMoviePage />} />
             </Route>
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
 };
